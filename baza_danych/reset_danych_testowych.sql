@@ -12,7 +12,6 @@ DELETE FROM sqlite_sequence;
 
 --WAZNE! przy inicjalizacji polaczenia z BD
 PRAGMA foreign_keys = ON;
---^uruchomic przy laczeniu
 PRAGMA foreign_keys;
 --^powinno w konsoli byc 1
 PRAGMA foreign_key_check;

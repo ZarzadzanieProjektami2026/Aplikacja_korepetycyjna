@@ -7,7 +7,8 @@ CREATE TABLE users (
     imie text NOT NULL,
     nazwisko text NOT NULL,
     email text UNIQUE NOT NULL,
-    data_zalozenia TEXT NOT NULL
+    data_zalozenia TEXT NOT NULL,
+    token_google TEXT NOT NULL,
         CHECK (datetime(data_zalozenia) IS NOT NULL),
 
     CONSTRAINT unique_nauczyciel_student
@@ -58,27 +59,7 @@ CREATE TABLE dzialy (
 )STRICT;
 
 
-CREATE TABLE zadania (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_dzialu INTEGER NOT NULL,
-    id_tworcy INTEGER NOT NULL,
-    nazwa text,
-    zadanie TEXT,
-    od_kiedy TEXT
-        CHECK (od_kiedy IS NULL OR datetime(od_kiedy) IS NOT NULL),
-    do_kiedy TEXT
-        CHECK (do_kiedy IS NULL OR datetime(do_kiedy) IS NOT NULL),
-    data_zalozenia TEXT NOT NULL
-    CHECK (datetime(data_zalozenia) IS NOT NULL),
 
-    CONSTRAINT fk_zadania_tworca
-        FOREIGN KEY (id_tworcy)
-        REFERENCES users(id),
-
-    CONSTRAINT fk_zadania_dzial
-        FOREIGN KEY (id_dzialu)
-        REFERENCES dzialy(id)
-)STRICT;
 
 CREATE TABLE grupy_uzytkownicy (
     id_grupa INTEGER NOT NULL,
@@ -112,3 +93,111 @@ CREATE TABLE grupy_dzialy (
         REFERENCES dzialy(id)
 )STRICT;
 
+CREATE TABLE fiszki_student ( 
+    id_fiszki INTEGER NOT NULL, 
+    id_student INTEGER NOT NULL,
+
+    CONSTRAINT fk_fiszki
+        FOREIGN KEY (id_fiszki)
+        REFERENCES zadania_fiszki(id),
+    CONSTRAINT fk_student 
+        FOREIGN KEY (id_student)
+        REFERENCES users(id)
+)STRICT; 
+
+CREATE TABLE zadania_fiszki (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_dzialu INTEGER NOT NULL,
+    id_tworcy INTEGER NOT NULL,
+    tytul TEXT,
+
+    pojecie TEXT NOT NULL,
+    definicja TEXT NOT NULL,
+
+    data_zalozenia TEXT NOT NULL
+    CHECK (datetime(data_zalozenia) IS NOT NULL),
+
+    CONSTRAINT fk_zadania_tworca
+        FOREIGN KEY (id_tworcy)
+        REFERENCES users(id),
+
+    CONSTRAINT fk_zadania_dzial
+        FOREIGN KEY (id_dzialu)
+        REFERENCES dzialy(id)
+)STRICT;
+
+CREATE TABLE zadania_otwarte (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    id_dzialu INTEGER NOT NULL,
+    id_tworcy INTEGER NOT NULL,
+    tytul TEXT,
+    zadanie TEXT NOT NULL, 
+
+    data_zalozenia TEXT NOT NULL
+    CHECK (datetime(data_zalozenia) IS NOT NULL),
+
+
+    CONSTRAINT fk_zadania_tworca
+        FOREIGN KEY (id_tworcy)
+        REFERENCES users(id),
+
+    CONSTRAINT fk_zadania_dzial
+        FOREIGN KEY (id_dzialu)
+        REFERENCES dzialy(id)
+
+
+) STRICT;
+
+CREATE TABLE zadania_otwarte_student(
+    id_zadanie_otwarte INTEGER NOT NULL, 
+    id_student INTEGER NOT NULL, 
+
+    odpowiedz TEXT, 
+    ocena REAL, 
+    notatka TEXT,
+    czy_oddane INTEGER NOT NULL
+        --0- nie oddane, 1-oddane 
+        CHECK (czy_oddane IN (0,1))
+
+    od_kiedy TEXT
+        CHECK (od_kiedy IS NULL OR datetime(od_kiedy) IS NOT NULL),
+    do_kiedy TEXT
+        CHECK (do_kiedy IS NULL OR datetime(do_kiedy) IS NOT NULL),
+
+    CONSTRAINT fk_zadanie_otwarte 
+        FOREIGN KEY(id_zadanie_otwarte)
+        REFERENCES zadania_otwarte(id),
+    CONSTRAINT fk_id_uzytkownika
+        FOREIGN KEY(id_student)
+        REFERENCES users(id)
+) STRICT; 
+
+CREATE TABLE zadania_wiele_odp (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_dzialu INTEGER NOT NULL, 
+    id_tworcy INTEGER NOT NULL, 
+
+    odpowiedzi TEXT, 
+
+    CONSTRAINT fk_zadania_tworca
+        FOREIGN KEY (id_tworcy)
+        REFERENCES users(id),
+
+    CONSTRAINT fk_zadania_dzial
+        FOREIGN KEY (id_dzialu)
+        REFERENCES dzialy(id)
+)STRICT; 
+
+CREATE TABLE zadania_wiele_odp_student (
+    id_zadanie_wiele_odp INTEGER NOT NULL, 
+    id_student INTEGER NOT NULL, 
+    
+    odpowiedz TEXT, 
+
+    CONSTRAINT fk_zadanie_wiele_odp 
+        PRIMARY KEY(id_zadanie_wiele_odp)
+        REFERENCES zadania_wiele_odp(id),
+    CONSTRAINT fk_student 
+        PRIMARY KEY (id_student)
+        REFERENCES users(id_student)
+);
