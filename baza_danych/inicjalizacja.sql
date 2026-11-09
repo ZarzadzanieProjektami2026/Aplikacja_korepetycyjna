@@ -93,10 +93,12 @@ CREATE TABLE grupy_dzialy (
         REFERENCES dzialy(id)
 )STRICT;
 
-CREATE TABLE fiszki_student ( 
+CREATE TABLE zadania_fiszki_student ( 
     id_fiszki INTEGER NOT NULL, 
     id_student INTEGER NOT NULL,
 
+    CONSTRAINT pk_zadania_fiszki_student
+        PRIMARY KEY (id_fiszki, id_student),
     CONSTRAINT fk_fiszki
         FOREIGN KEY (id_fiszki)
         REFERENCES zadania_fiszki(id),
@@ -157,17 +159,19 @@ CREATE TABLE zadania_otwarte_student(
     notatka TEXT,
     czy_oddane INTEGER NOT NULL
         --0- nie oddane, 1-oddane 
-        CHECK (czy_oddane IN (0,1))
+        CHECK (czy_oddane IN (0,1)),
 
     od_kiedy TEXT
         CHECK (od_kiedy IS NULL OR datetime(od_kiedy) IS NOT NULL),
     do_kiedy TEXT
         CHECK (do_kiedy IS NULL OR datetime(do_kiedy) IS NOT NULL),
 
+    CONSTRAINT pk_zadania_otwarte_student 
+        PRIMARY KEY(id_zadanie_otwarte,id_student),
     CONSTRAINT fk_zadanie_otwarte 
         FOREIGN KEY(id_zadanie_otwarte)
         REFERENCES zadania_otwarte(id),
-    CONSTRAINT fk_id_uzytkownika
+    CONSTRAINT fk_id_student
         FOREIGN KEY(id_student)
         REFERENCES users(id)
 ) STRICT; 
@@ -175,9 +179,14 @@ CREATE TABLE zadania_otwarte_student(
 CREATE TABLE zadania_wiele_odp (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_dzialu INTEGER NOT NULL, 
-    id_tworcy INTEGER NOT NULL, 
+    id_tworcy INTEGER NOT NULL,
 
-    odpowiedzi TEXT, 
+    data_zalozenia TEXT NOT NULL
+    CHECK (datetime(data_zalozenia) IS NOT NULL),
+
+    zadanie TEXT, 
+    poprawna_odpowiedz TEXT, 
+    niepoprawne_odpowiedzi TEXT, 
 
     CONSTRAINT fk_zadania_tworca
         FOREIGN KEY (id_tworcy)
@@ -192,12 +201,26 @@ CREATE TABLE zadania_wiele_odp_student (
     id_zadanie_wiele_odp INTEGER NOT NULL, 
     id_student INTEGER NOT NULL, 
     
-    odpowiedz TEXT, 
+    odpowiedz_studenta TEXT, 
+    ocena REAL, 
+    notatka TEXT,
+    czy_oddane INTEGER NOT NULL
+        --0- nie oddane, 1-oddane 
+        CHECK (czy_oddane IN (0,1)),
+
+    od_kiedy TEXT
+        CHECK (od_kiedy IS NULL OR datetime(od_kiedy) IS NOT NULL),
+    do_kiedy TEXT
+        CHECK (do_kiedy IS NULL OR datetime(do_kiedy) IS NOT NULL),
+
+    CONSTRAINT pk_zadania_wiele_odp_student 
+        PRIMARY KEY (id_zadanie_wiele_odp, id_student),
 
     CONSTRAINT fk_zadanie_wiele_odp 
-        PRIMARY KEY(id_zadanie_wiele_odp)
+        FOREIGN KEY (id_zadanie_wiele_odp)
         REFERENCES zadania_wiele_odp(id),
+
     CONSTRAINT fk_student 
-        PRIMARY KEY (id_student)
-        REFERENCES users(id_student)
-);
+        FOREIGN KEY (id_student)
+        REFERENCES users(id)
+)STRICT;
