@@ -1,5 +1,19 @@
 /* color palette from <https://github.com/vuejs/theme> */
+@import url('https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
+  --blue: #43769B;
+  --light-blue: #B6C9D7;
+  --pink: #E49590;
+  --light-pink: #FCCBBC;
+  --orange: #FCC582;
+  --yellow: #FFE195;
+  --green: #C2BD95;
+  --light-green: #EDDEBF;
+  --purple: #775082;
+  --light-purple: #F7E6FC;
+  --beige: #FCF0E4;
+
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
@@ -78,7 +92,8 @@ body {
     'Fira Sans',
     'Droid Sans',
     'Helvetica Neue',
-    sans-serif;
+    sans-serif,
+    'Sour Gummy';
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
