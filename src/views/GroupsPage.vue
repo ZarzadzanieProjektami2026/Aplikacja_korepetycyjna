@@ -62,8 +62,8 @@
 
     <div class="container">
         <div class="page-title">Grupy</div>
-        
-        <div class="container-hint">
+        <button class="add-group">Stwórz grupę</button>
+        <div class="container-hint groups">
             <span>Nazwa</span>
             <span>Ilość uczniów</span>
         </div>
@@ -80,6 +80,7 @@
                 text="Korepetycje angielski"
                 studentNumber="15 uczniów"
             ></GroupPanel>
+            
         </div>
     </div>
 
@@ -115,11 +116,30 @@
         
     }
 
-    .container-hint {
+    .add-group {
+        border-radius: 40px;
+        height: 50px;
+        width: 150px;
+        justify-content: center;
+        align-content: center;
+        border: none;
+        background: var(--orange);
+        position: absolute;
+        right: 2%;
+        top: 6%;
+    }
+
+    .add-group:hover {
+        background: var(--yellow);
+        border: 5px solid var(--orange)
+    }
+
+    .container-hint.groups {
         display: flex;
         justify-content: space-around;
         width: 60%;
         opacity: 60%;
+        margin-bottom: 0px;
     }
 
     .edit-group-container {

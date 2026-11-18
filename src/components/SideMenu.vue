@@ -18,7 +18,7 @@ const router = useRouter()
         <button class="icon-btn" id="btn-calendar" @click="router.push('/kalendarz')">()</button>
         <div class="btn-name">Kalendarz</div>
 
-        <button class="icon-btn" id="btn-statistics">()</button>
+        <button class="icon-btn" id="btn-statistics" @click="router.push('/statystyki')">()</button>
         <div class="btn-name">Statystyki</div>
     </div>
 
