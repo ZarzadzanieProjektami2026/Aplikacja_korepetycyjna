@@ -1,7 +1,7 @@
-<script setup>
-    import SideMenu from './components/SideMenu.vue';
-    import GroupPanel from './components/GroupPanel.vue';
-    import StudentPanel from './components/StudentPanel.vue';
+<script setup lang="ts">
+    import SideMenu from '@/components/SideMenu.vue';
+    import GroupPanel from '@/components/GroupPanel.vue';
+    import StudentPanel from '@/components/StudentPanel.vue';
 </script>
 
 <template>

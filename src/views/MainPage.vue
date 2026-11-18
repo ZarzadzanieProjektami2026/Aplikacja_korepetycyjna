@@ -1,8 +1,10 @@
 <script setup>
-  import SideMenu from './components/SideMenu.vue';
-  import IconButton from './components/IconButton.vue';
-  import TaskInProgress from './components/TaskInProgress.vue';
-  import NotificationPanel from './components/NotificationPanel.vue';
+  import { useRouter } from 'vue-router'
+  import SideMenu from '@/components/SideMenu.vue';
+  import IconButton from '@/components/IconButton.vue';
+  import TaskInProgress from '@/components/TaskInProgress.vue';
+  import NotificationPanel from '@/components/NotificationPanel.vue';
+  const router = useRouter()
 </script>
 
 <template>
@@ -14,15 +16,15 @@
       <div class="welcome-text">Witaj ponownie!</div>
 
       <div class="box-container">
-        <button class="btn-wide" id="btn-tasks">Zadania</button>
-         <button class="btn-wide" id="btn-statistics">Statystyki</button>
+        <button class="btn-wide" id="btn-tasks" @click="router.push('/zadania')">Zadania</button>
+         <button class="btn-wide" id="btn-statistics" @click="router.push('/statystyki')">Statystyki</button>
       </div>
 
       <div class="box-container group">
         <div class="box-title">Moje Grupy</div>
         <!--dynamiczne dodawanie, tu dla przykładu tylko jak przyciski wyglądają-->
         <div class="groups-container">
-          <IconButton icon="()" text="Korepetycje"></IconButton>
+          <IconButton icon="()" text="Korepetycje" @click="router.push('/grupy')"></IconButton>
           <IconButton icon="()" text="Korepetycje"></IconButton>
           <IconButton icon="()" text="Korepetycje"></IconButton>
           <IconButton icon="()" text="Korepetycje"></IconButton>

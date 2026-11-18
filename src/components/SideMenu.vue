@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+</script>
 <template>
     <div class="side-menu">
         <button class="icon-btn" id="btn-account">()</button>
@@ -6,10 +12,10 @@
         <button class="icon-btn" id="btn-tasks">()</button>
         <div class="btn-name">Zadania</div>
 
-        <button class="icon-btn" id="btn-groups">()</button>
+        <button class="icon-btn" id="btn-groups" @click="router.push('/grupy')">()</button>
         <div class="btn-name">Grupy</div>
 
-        <button class="icon-btn" id="btn-calendar">()</button>
+        <button class="icon-btn" id="btn-calendar" @click="router.push('/kalendarz')">()</button>
         <div class="btn-name">Kalendarz</div>
 
         <button class="icon-btn" id="btn-statistics">()</button>
